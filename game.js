@@ -41,7 +41,7 @@ class Game {
 
     click(event) {
 	event.preventDefault();
-	this.itemManager.click(this, event.offsetX, event.offsetY);
+	this.itemManager.click(this, event.pageX, event.pageY);
     }
 
     render() {

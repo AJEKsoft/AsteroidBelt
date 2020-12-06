@@ -30,3 +30,27 @@ function randomPolygon(w, h) {
     points.push({x: getRandomInt(0, w / 2), y: getRandomInt(h / 2, h)});
     return points;
 }
+
+function polygonCentroid(polygon) {
+    let x = 0;
+    let y = 0;
+    for (var i = 0; i < polygon.length; ++i) {
+	x += polygon[i].x;
+	y += polygon[i].y;
+    }
+    return {x: x / polygon.length, y: y / polygon.length}
+}
+
+function polygonRadius(polygon) {
+    let centroid = polygonCentroid(polygon);
+    let result = 0;
+
+    for (var i = 0; i < polygon.length; ++i) {
+	let dist = Math.hypot(centroid.x - polygon[i].x, centroid.y - polygon[i].y);
+	if (dist > result) {
+	    result = dist;
+	}		
+    }
+    
+    return result;
+}

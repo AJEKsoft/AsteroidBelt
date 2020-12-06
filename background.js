@@ -2,9 +2,9 @@ class Star {
     constructor(x, y, w, h, color, speed) {
 	this.x = x;
 	this.y = y;
-	this.w = w;
-	this.h = h;
 	this.polygon = randomPolygon(w, h);
+	this.centroid = polygonCentroid(this.polygon);
+	this.radius = polygonRadius(this.polygon);
 	this.color = color;
 	this.speed = speed;
     }
@@ -12,8 +12,8 @@ class Star {
     update(game) {
 	this.y += this.speed * game.deltaTime;
 
-	if(this.y >= game.canvas.height) {
-	    this.y = -this.h;
+	if(this.y - this.radius - this.centroid.y >= game.canvas.height) {
+	    this.y = -this.radius - this.centroid.y;
 	}
     }
 

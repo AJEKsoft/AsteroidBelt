@@ -2,10 +2,10 @@ class Item {
     constructor(x, y, w, h, speed, color, worth, clicks) {
 	this.x = x;
 	this.y = y;
-	this.w = w;
-	this.h = h;
-	this.angle = 0;
 	this.polygon = randomPolygon(w, h);
+	this.centroid = polygonCentroid(this.polygon);
+	this.radius = polygonRadius(this.polygon);
+	this.angle = 0;
 	this.speed = speed;
 	this.deleted = false;
 
@@ -19,7 +19,7 @@ class Item {
 	this.y += this.speed * game.deltaTime;
 	this.angle += (this.speed / 2) * game.deltaTime;
 
-	if(this.y >= game.canvas.height || this.x - this.w < 0 ||
+	if(this.y - this.radius - this.centroid.y >= game.canvas.height || this.x - this.radius - this.centroid.x < 0 ||
 	   this.x > game.canvas.width) {
 	    this.deleted = true;
 	}
@@ -30,12 +30,12 @@ class Item {
 	context.save();
 	context.beginPath();
 
-	context.translate(this.x + this.w / 2, this.y + this.h / 2);
+	context.translate(this.x - this.centroid.x, this.y - this.centroid.y);
 	context.rotate(this.angle * Math.PI / 180);
 
-	context.moveTo(this.polygon[0].x - this.w / 2, this.polygon[0].y - this.h / 2);
+	context.moveTo(this.polygon[0].x - this.centroid.x, this.polygon[0].y - this.centroid.y);
 	for (var i = 0; i < this.polygon.length; ++i) {
-	    context.lineTo(this.polygon[i].x - this.w / 2, this.polygon[i].y - this.h / 2);
+	    context.lineTo(this.polygon[i].x - this.centroid.x, this.polygon[i].y - this.centroid.y);
 	}
 	
 	context.closePath();
@@ -51,8 +51,9 @@ class ItemManager {
 
     click(game, x, y) {
 	this.items.forEach(function (item) {
-	    if (x > item.x - item.w && x < item.x + item.w &&
-		y > item.y - item.h && y < item.y + item.h) {
+	    let relx = item.x - item.centroid.x;
+	    let rely = item.y - item.centroid.y;
+	    if (Math.hypot(x - relx, y - rely) < item.radius) {
 		item.clicks--;
 		if (item.clicks == 0) {
 		    item.deleted = true;
@@ -61,20 +62,20 @@ class ItemManager {
 
 		    for (var j = 0; j < 4; ++j) {
 			for (var i = 0; i < 4; ++i) {
-			    game.particleManager.spawn(item.x + (i * item.w / 4), item.y + (j * item.h / 4), item.w / 4, item.h / 4, item.color);
+			    game.particleManager.spawn(relx, rely, item.radius / 4, item.radius / 4, item.color);
 			}
 		    }
 
 		    for (var i = 0; i < item.worth.minerals; i++) {
-			game.particleManager.spawn(x, y, 10, 10, "gray");
+			game.particleManager.spawn(relx, rely, 10, 10, "gray");
 		    }
 
 		    for (var i = 0; i < item.worth.precious; i++) {
-			game.particleManager.spawn(x, y, 10, 10, "gold");
+			game.particleManager.spawn(relx, rely, 10, 10, "gold");
 		    }
 		} else {
 		    for (var i = 0; i < Math.floor(Math.random() * 3) + 2; ++i) {
-			game.particleManager.spawn(x, y, item.w / 4, item.h / 4, darkenColor(item.color, 20));
+			game.particleManager.spawn(relx, rely, item.radius / 4, item.radius / 4, darkenColor(item.color, 20));
 		    }
 		}
 	    }

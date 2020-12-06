@@ -2,10 +2,10 @@ class Particle {
     constructor(x, y, w, h, velX, velY, color) {
 	this.x = x;
 	this.y = y;
-	this.w = w;
-	this.h = h;
-	this.angle = 0;
 	this.polygon = randomPolygon(w, h);
+	this.centroid = polygonCentroid(this.polygon);
+	this.radius = polygonRadius(this.polygon);
+	this.angle = 0;
 	this.velX = velX;
 	this.velY = velY;
 	this.color = color;
@@ -19,7 +19,7 @@ class Particle {
 	this.x += this.velX;
 	this.y += this.velY;
 
-	if(this.y >= game.canvas.height || this.x + this.w < 0 ||
+	if(this.y - this.radius - this.centroid.y >= game.canvas.height || this.x - this.radius - this.centroid.x < 0 ||
 	   this.x > game.canvas.width) {
 	    this.deleted = true;
 	}
@@ -30,12 +30,12 @@ class Particle {
 	context.save();
 	context.beginPath();
 
-	context.translate(this.x + this.w / 2, this.y + this.h / 2);
+	context.translate(this.x - this.centroid.x, this.y - this.centroid.y);
 	context.rotate(this.angle * Math.PI / 180);
-	
-	context.moveTo(this.polygon[0].x - this.w / 2, this.polygon[0].y - this.h / 2);
+
+	context.moveTo(this.polygon[0].x - this.centroid.x, this.polygon[0].y - this.centroid.y);
 	for (var i = 0; i < this.polygon.length; ++i) {
-	    context.lineTo(this.polygon[i].x - this.w / 2, this.polygon[i].y - this.h / 2);
+	    context.lineTo(this.polygon[i].x - this.centroid.x, this.polygon[i].y - this.centroid.y);
 	}
 	
 	context.closePath();
