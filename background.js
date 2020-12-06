@@ -35,19 +35,19 @@ class Background {
 
 	// Big stars.
 	for (var i = 0; i < 40; ++i) {
-	    let star = new Star(Math.floor(Math.random() * (w - 10)), Math.floor(Math.random() * (h - 10)), 10, 10, "white", 0.1);
+	    let star = new Star(Math.floor(Math.random() * (w - 10)), Math.floor(Math.random() * (h - 10)), 10, 10, randomColor(0, 360, 20, 100), 0.1);
 	    this.stars.add(star);
 	}
 
 	// Medium stars.
 	for (var i = 0; i < 70; ++i) {
-	    let star = new Star(Math.floor(Math.random() * (w - 5)), Math.floor(Math.random() * (h - 5)), 5, 5, "white", 0.05);
+	    let star = new Star(Math.floor(Math.random() * (w - 5)), Math.floor(Math.random() * (h - 5)), 5, 5, randomColor(0, 360, 20, 75), 0.05);
 	    this.stars.add(star);
 	}
 
 	// Small stars.
 	for (var i = 0; i < 100; ++i) {
-	    let star = new Star(Math.floor(Math.random() * (w - 2)), Math.floor(Math.random() * (h - 2)), 2, 2, "white", 0.03);
+	    let star = new Star(Math.floor(Math.random() * (w - 2)), Math.floor(Math.random() * (h - 2)), 2, 2, randomColor(0, 360, 20, 50), 0.03);
 	    this.stars.add(star);
 	}
 

@@ -62,15 +62,11 @@ class ItemManager {
 	    }
 	}.bind(this));
     }
-
-    randomColor() {
-	return "hsl(" + 360 * Math.random() + ', 60%, 60%)';
-    }
     
     spawn(w) {
 	var item = new Item(Math.floor(Math.random() * (w - 75)), -75, 75, 75, 0.3,
-			    this.randomColor(), {coins: Math.floor(Math.random() * 10),
-						 gems: Math.floor(Math.random() * 2)});
+			    randomColor(0, 360, 60, 75), {coins: Math.floor(Math.random() * 10),
+							  gems: Math.floor(Math.random() * 2)});
 	this.items.add(item);
     }
     

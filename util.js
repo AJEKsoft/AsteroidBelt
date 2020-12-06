@@ -1,3 +1,7 @@
+function randomColor(min, max, saturation, lightness) {
+    return "hsl(" + getRandomInt(min, max) + ',' + saturation + '%,' + lightness + '%)';
+}
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
