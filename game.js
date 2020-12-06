@@ -46,8 +46,8 @@ class Game {
 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
 	this.background.render(this.context);
-	this.particleManager.render(this.context);
 	this.itemManager.render(this.context);
+	this.particleManager.render(this.context);
     }
     
     pause() {

@@ -1,5 +1,19 @@
+function hsl(hue, saturation, lightness) {
+    return "hsl(" + hue + ',' + saturation + '%,' + lightness + '%)';
+}
+
+
+function darkenColor(color, by) {
+    let components = /hsl\(\s*(\d+)\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*\)/.exec(color);
+    let hue = components[1];
+    let saturation = components[2];
+    let lightness = components[3];
+
+    return hsl(hue, saturation, parseInt(lightness) - by);
+}
+
 function randomColor(min, max, saturation, lightness) {
-    return "hsl(" + getRandomInt(min, max) + ',' + saturation + '%,' + lightness + '%)';
+    return hsl(getRandomInt(min, max), saturation, lightness);
 }
 
 function getRandomInt(min, max) {
