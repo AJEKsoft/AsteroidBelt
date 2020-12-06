@@ -33,11 +33,10 @@ class Item {
 	context.translate(this.x + this.w / 2, this.y + this.h / 2);
 	context.rotate(this.angle * Math.PI / 180);
 
-	context.fillRect(-this.w / 2, -this.h / 2, this.w, this.h);
-	// context.moveTo(this.polygon[0].x - this.w / 2, this.polygon[0].y - this.h / 2);
-	// for (var i = 0; i < this.polygon.length; ++i) {
-	//     context.lineTo(this.polygon[i].x - this.w / 2, this.polygon[i].y - this.h / 2);
-	// }
+	context.moveTo(this.polygon[0].x - this.w / 2, this.polygon[0].y - this.h / 2);
+	for (var i = 0; i < this.polygon.length; ++i) {
+	    context.lineTo(this.polygon[i].x - this.w / 2, this.polygon[i].y - this.h / 2);
+	}
 	
 	context.closePath();
 	context.fill();
@@ -52,8 +51,8 @@ class ItemManager {
 
     click(game, x, y) {
 	this.items.forEach(function (item) {
-	    if (x > item.x - item.w && x < item.x + item.w &&
-		y > item.y - item.h && y < item.y + item.h) {
+	    if (x > item.x - item.w / 2 && x < item.x + item.w / 2 &&
+		y > item.y - item.h / 2 && y < item.y + item.h / 2) {
 		item.clicks--;
 		if (item.clicks == 0) {
 		    item.deleted = true;
