@@ -51,8 +51,8 @@ class ItemManager {
 
     click(game, x, y) {
 	this.items.forEach(function (item) {
-	    if (x > item.x - item.w && x < item.x + item.w &&
-		y > item.y - item.h && y < item.y + item.h) {
+	    if (x > item.x - item.w / 2 && x < item.x + item.w / 2 &&
+		y > item.y - item.h / 2 && y < item.y + item.h / 2) {
 		item.clicks--;
 		if (item.clicks == 0) {
 		    item.deleted = true;
