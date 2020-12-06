@@ -1,0 +1,9 @@
+body {
+    background: black;
+    margin: 0;
+    overflow: hidden !important;
+
+    text-rendering: optimizeSpeed;
+    font-smooth: never;
+}
+
