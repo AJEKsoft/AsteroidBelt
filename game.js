@@ -15,6 +15,7 @@ class Game {
 	this.canvas.addEventListener("mousedown", this.click.bind(this));
 	this.canvas.addEventListener("touchstart", this.click.bind(this));
 
+	this.background = new Background(this.canvas.width, this.canvas.height);
 	this.itemManager = new ItemManager();
 	this.particleManager = new ParticleManager();
     }
@@ -32,8 +33,9 @@ class Game {
 	this.deltaTime = (timestamp - this.lastTime);
 	this.lastTime = timestamp;
 
-	this.itemManager.update(this);
+	this.background.update(this);
 	this.particleManager.update(this);
+	this.itemManager.update(this);
     }
 
     click(event) {
@@ -43,8 +45,9 @@ class Game {
     render() {
 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-	this.itemManager.render(this.context);
+	this.background.render(this.context);
 	this.particleManager.render(this.context);
+	this.itemManager.render(this.context);
     }
     
     pause() {
