@@ -16,7 +16,7 @@ class Game {
 
 	this.minerals = 0;
 	this.precious = 0;
-	this.background = new Background(this.canvas.width, this.canvas.height);
+	this.background = new Background(this);
 	this.itemManager = new ItemManager();
 	this.particleManager = new ParticleManager();
     }
@@ -54,28 +54,14 @@ class Game {
 
     addMinerals(n) {
 	let node = document.getElementById("minerals");
-	let dummy = this.minerals;
 	this.minerals = this.minerals + n;
-	let interval = setInterval(function() {
-	    if (dummy == this.minerals) {
-		clearInterval(interval);
-	    } else {
-		node.innerText = "Minerals: " + (dummy++);
-	    }
-	}.bind(this), 500 / n);
+	node.innerText = "Minerals: " + this.minerals;
     }
 
     addPrecious(n) {
 	let node = document.getElementById("precious");
-	let dummy = this.precious;
 	this.precious = this.precious + n;
-	let interval = setInterval(function() {
-	    if (dummy == this.precious) {
-		clearInterval(interval);
-	    } else {
-		node.innerText = "Precious: " + (dummy++);
-	    }
-	}.bind(this), 500 / n);
+	node.innerText = "Precious: " + this.precious;
     }
     
     pause() {

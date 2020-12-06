@@ -19,7 +19,7 @@ class Particle {
 	this.x += this.velX;
 	this.y += this.velY;
 
-	if(this.y - this.radius - this.centroid.y >= game.canvas.height || this.x - this.radius - this.centroid.x < 0 ||
+	if(this.y - this.radius - this.centroid.y >= game.canvas.height || this.x + this.radius + this.centroid.x < 0 ||
 	   this.x > game.canvas.width) {
 	    this.deleted = true;
 	}
