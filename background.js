@@ -1,3 +1,5 @@
+// We could make it use sub-canvases instead of images.
+
 class Star {
     constructor(x, y, w, h, color) {
 	this.x = x;
@@ -54,17 +56,17 @@ class Background {
 	let stars2 = new Set();
 	let stars3 = new Set();
 
-	for (var i = 0; i < 100; ++i) {
+	for (var i = 0; i < 70; ++i) {
 	    let star = new Star(Math.floor(Math.random() * (w - 10)), Math.floor(Math.random() * (h - 10)), 10, 10, randomColor(0, 360, 20, 100));
 	    stars1.add(star);
 	}
 
-	for (var i = 0; i < 100; ++i) {
+	for (var i = 0; i < 150; ++i) {
 	    let star = new Star(Math.floor(Math.random() * (w - 5)), Math.floor(Math.random() * (h - 5)), 5, 5, randomColor(0, 360, 20, 75));
 	    stars2.add(star);
 	}
 
-	for (var i = 0; i < 100; ++i) {
+	for (var i = 0; i < 1000; ++i) {
 	    let star = new Star(Math.floor(Math.random() * (w - 2)), Math.floor(Math.random() * (h - 2)), 2, 2, randomColor(0, 360, 20, 50));
 	    stars3.add(star);
 	}

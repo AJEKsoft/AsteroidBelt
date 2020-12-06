@@ -50,10 +50,11 @@ class ItemManager {
     }
 
     click(game, x, y) {
-	this.items.forEach(function (item) {
+	for (let item of this.items) {
 	    let relx = item.x - item.centroid.x;
 	    let rely = item.y - item.centroid.y;
 	    if (Math.hypot(x - relx, y - rely) < item.radius) {
+		game.audioManager.playSFX("break");
 		item.clicks--;
 		if (item.clicks == 0) {
 		    item.deleted = true;
@@ -78,13 +79,14 @@ class ItemManager {
 			game.particleManager.spawn(relx, rely, item.radius / 4, item.radius / 4, darkenColor(item.color, 20));
 		    }
 		}
+		break;
 	    }
-	}.bind(this));
+	}
     }
     
     spawn(w) {
 	if (Math.random() > 0.50) {
-	    var item = new Item(Math.floor(Math.random() * (w - 75)), -75, 75, 75, 0.1,
+	    var item = new Item(Math.floor(Math.random() * (w - 75)), -75, 75, 75, 0.25,
 				randomColor(0, 360, 60, 75), {minerals: Math.floor(Math.random() * 10),
 							      precious: Math.floor(Math.random() * 2)}, 1);
 	} else {
@@ -96,7 +98,7 @@ class ItemManager {
     }
     
     update(game) {
-	if (game.elapsedFrames % 100 == 0) {
+	if (game.elapsedFrames % 50 == 0) {
 	    this.spawn(game.canvas.width);
 	}
 	

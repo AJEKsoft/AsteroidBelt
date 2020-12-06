@@ -4,7 +4,7 @@ class Game {
 	this.canvas.width = window.innerWidth;
 	this.canvas.height = window.innerHeight;
 	
-	this.context = canvas.getContext("2d");
+	this.context = canvas.getContext("2d", {alpha: false});
 	this.lastTime = 0;
 	this.deltaTime = 0;
 	this.elapsedFrames = 0;
@@ -16,6 +16,7 @@ class Game {
 
 	this.minerals = 0;
 	this.precious = 0;
+	this.audioManager = new AudioManager();
 	this.background = new Background(this);
 	this.itemManager = new ItemManager();
 	this.particleManager = new ParticleManager();
@@ -45,7 +46,8 @@ class Game {
     }
 
     render() {
-	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	this.context.fillStyle = "black";
+	this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
 	this.background.render(this.context);
 	this.itemManager.render(this.context);
