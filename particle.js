@@ -4,6 +4,7 @@ class Particle {
 	this.y = y;
 	this.w = w;
 	this.h = h;
+	this.angle = 0;
 	this.polygon = randomPolygon(w, h);
 	this.velX = velX;
 	this.velY = velY;
@@ -13,6 +14,7 @@ class Particle {
 
     update(game) {
 	this.velY += 0.01 * game.deltaTime;
+	this.angle = this.velX * this.velY * game.deltaTime;
 	
 	this.x += this.velX;
 	this.y += this.velY;
@@ -25,13 +27,20 @@ class Particle {
 
     render(context) {
 	context.fillStyle = this.color;
+	context.save();
 	context.beginPath();
-	context.moveTo(this.x + this.polygon[0].x, this.y + this.polygon[0].y);
+
+	context.translate(this.x + this.w / 2, this.y + this.h / 2);
+	context.rotate(this.angle * Math.PI / 180);
+	
+	context.moveTo(this.polygon[0].x - this.w / 2, this.polygon[0].y - this.h / 2);
 	for (var i = 0; i < this.polygon.length; ++i) {
-	    context.lineTo(this.x + this.polygon[i].x, this.y + this.polygon[i].y);
+	    context.lineTo(this.polygon[i].x - this.w / 2, this.polygon[i].y - this.h / 2);
 	}
+	
 	context.closePath();
 	context.fill();
+	context.restore();
     }
 }
 
