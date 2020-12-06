@@ -62,7 +62,7 @@ class ItemManager {
 			game.particleManager.spawn(x, y, 10, 10, "green");
 		    }
 		} else {
-		    for (var i = 0; i < Math.floor(Math.random() * 10); ++i) {
+		    for (var i = 0; i < Math.floor(Math.random() * 3) + 2; ++i) {
 			game.particleManager.spawn(x, y, item.w / 4, item.h / 4, darkenColor(item.color, 20));
 		    }
 		}
