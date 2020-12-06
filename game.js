@@ -13,8 +13,9 @@ class Game {
 	this.clicking = false;
 	
 	this.canvas.addEventListener("mousedown", this.click.bind(this));
-	this.canvas.addEventListener("touchstart", this.click.bind(this));
 
+	this.minerals = 0;
+	this.precious = 0;
 	this.background = new Background(this.canvas.width, this.canvas.height);
 	this.itemManager = new ItemManager();
 	this.particleManager = new ParticleManager();
@@ -39,7 +40,8 @@ class Game {
     }
 
     click(event) {
-	this.itemManager.click(this, event.pageX, event.pageY);
+	event.preventDefault();
+	this.itemManager.click(this, event.offsetX, event.offsetY);
     }
 
     render() {
@@ -48,6 +50,32 @@ class Game {
 	this.background.render(this.context);
 	this.itemManager.render(this.context);
 	this.particleManager.render(this.context);
+    }
+
+    addMinerals(n) {
+	let node = document.getElementById("minerals");
+	let dummy = this.minerals;
+	this.minerals = this.minerals + n;
+	let interval = setInterval(function() {
+	    if (dummy == this.minerals) {
+		clearInterval(interval);
+	    } else {
+		node.innerText = "Minerals: " + (dummy++);
+	    }
+	}.bind(this), 500 / n);
+    }
+
+    addPrecious(n) {
+	let node = document.getElementById("precious");
+	let dummy = this.precious;
+	this.precious = this.precious + n;
+	let interval = setInterval(function() {
+	    if (dummy == this.precious) {
+		clearInterval(interval);
+	    } else {
+		node.innerText = "Precious: " + (dummy++);
+	    }
+	}.bind(this), 500 / n);
     }
     
     pause() {

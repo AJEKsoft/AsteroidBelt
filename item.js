@@ -51,11 +51,13 @@ class ItemManager {
 
     click(game, x, y) {
 	this.items.forEach(function (item) {
-	    if (x > item.x && x < item.x + item.w &&
-		y > item.y && y < item.y + item.h) {
+	    if (x > item.x - item.w && x < item.x + item.w &&
+		y > item.y - item.h && y < item.y + item.h) {
 		item.clicks--;
 		if (item.clicks == 0) {
 		    item.deleted = true;
+		    game.addMinerals(item.worth.minerals);
+		    game.addPrecious(item.worth.precious);
 
 		    for (var j = 0; j < 4; ++j) {
 			for (var i = 0; i < 4; ++i) {
@@ -63,12 +65,12 @@ class ItemManager {
 			}
 		    }
 
-		    for (var i = 0; i < item.worth.coins; i++) {
-			game.particleManager.spawn(x, y, 10, 10, "gold");
+		    for (var i = 0; i < item.worth.minerals; i++) {
+			game.particleManager.spawn(x, y, 10, 10, "gray");
 		    }
 
-		    for (var i = 0; i < item.worth.gems; i++) {
-			game.particleManager.spawn(x, y, 10, 10, "green");
+		    for (var i = 0; i < item.worth.precious; i++) {
+			game.particleManager.spawn(x, y, 10, 10, "gold");
 		    }
 		} else {
 		    for (var i = 0; i < Math.floor(Math.random() * 3) + 2; ++i) {
@@ -81,13 +83,13 @@ class ItemManager {
     
     spawn(w) {
 	if (Math.random() > 0.50) {
-	    var item = new Item(Math.floor(Math.random() * (w - 75)), -75, 75, 75, 0.3,
-				randomColor(0, 360, 60, 75), {coins: Math.floor(Math.random() * 10),
-							      gems: Math.floor(Math.random() * 2)}, 1);
+	    var item = new Item(Math.floor(Math.random() * (w - 75)), -75, 75, 75, 0.1,
+				randomColor(0, 360, 60, 75), {minerals: Math.floor(Math.random() * 10),
+							      precious: Math.floor(Math.random() * 2)}, 1);
 	} else {
 	    var item = new Item(Math.floor(Math.random() * (w - 150)), -150, 150, 150, 0.15,
-				randomColor(0, 360, 60, 75), {coins: Math.floor(Math.random() * 30) + 10,
-							      gems: Math.floor(Math.random() * 6) + 3}, 3);
+				randomColor(0, 360, 60, 75), {minerals: Math.floor(Math.random() * 30) + 10,
+							      precious: Math.floor(Math.random() * 6) + 3}, 3);
 	}
 	this.items.add(item);
     }
